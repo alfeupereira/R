@@ -1,0 +1,26 @@
+# creating the model
+modelo_v2 <- randomForest(inadimplente ~ ., data = dados_treino_bal)
+modelo_v2
+
+# evaluating
+plot(modelo_v2)
+
+# Previsões com dados de teste
+previsoes_v2 <- predict(modelo_v2, dados_teste)
+
+# confusion matrix
+cm_v2 <- caret::confusionMatrix(previsoes_v2, dados_teste$inadimplente, positive = "1")
+cm_v2
+
+# Precision, Recall und F1-Score, predictive model evaluation metrics
+y <- dados_teste$inadimplente
+y_pred_v2 <- previsoes_v2 
+
+precision <- posPredValue(y_pred_v2, y)
+precision
+
+recall <- sensitivity(y_pred_v2, y)
+recall
+
+F1 <- (2* precision * recall) / (precision + recall)
+F1
